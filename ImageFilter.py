@@ -53,20 +53,12 @@ def apply_filter_gray(img, k0, filter_type="hghp"):
     return inverse_fft_result.real  
 
 def apply_filter_rgb(img, k0, filter_type="hghp"):
-    #for channel in range(img.shape[-1]):  # Iterate over color channels
-        #img[:, :, channel] = apply_filter_gray(img[:,:, channel], k0, filter_type=filter_type)
-        
-    #return img
-    
     yuv_img = rgb2yuv(img)
-
-    # Apply filter to the Y channel
+    
     y_channel = apply_filter_gray(yuv_img[:,:,0], k0, filter_type=filter_type)
 
-    # Replace the Y channel in the YUV image with the filtered version
     yuv_img[:,:,0] = y_channel
 
-    # Convert back to RGB
     filtered_img = yuv2rgb(yuv_img)
     
     return filtered_img
